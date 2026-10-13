@@ -1,0 +1,40 @@
+### 1. Criar o Usuário (Maria)
+POST http://localhost:8081/usuarios
+Content-Type: application/json
+
+{
+  "nome": "Maria Segunda",
+  "email": "maria2@email.com",
+  "senha": "senha12345"
+}
+
+### 2. Tentar ver o saldo SEM estar logado (Deve dar 403 Forbidden)
+GET http://localhost:8081/contas/1/saldo
+
+### 3. Fazer Login (Deve dar 200 OK) -> COPIE O TOKEN GERADO AQUI!
+POST http://localhost:8081/login
+Content-Type: application/json
+
+{
+  "email": "maria2@email.com",
+  "senha": "senha12345"
+}
+
+
+
+### 4. Forçar a criação da conta bancária no banco zerado
+POST http://localhost:8081/contas/criar-forcado
+Authorization: Bearer COLE_O_TOKEN_AQUI
+
+### 5. Fazer um depósito de R$ 150,50 na conta criada
+POST http://localhost:8081/contas/1/deposito
+Content-Type: application/json
+Authorization: Bearer COLE_O_TOKEN_AQUI
+
+{
+  "valor": 150.50
+}
+
+### 6. Consultar o saldo final protegido por Token (Deve retornar 150.50)
+GET http://localhost:8081/contas/1/saldo
+Authorization: Bearer COLE_O_TOKEN_AQUI
